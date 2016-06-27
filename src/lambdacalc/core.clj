@@ -27,12 +27,6 @@
     (list? x) (apply list (map pp x))
     :else x))
 
-(defn to-integer [f]
-  ((f inc) 0))
-
-(defn to-boolean [f]
-  ((f 'true) 'false))
-
 ;; ~ Definitions ~
 (define ZERO    (λf . (λx . x)))
 (define ONE     (λf . (λx . (f x))))
@@ -76,6 +70,22 @@
 (define EMPTY? LEFT)
 (define FIRST (λl . (LEFT (RIGHT l))))
 (define REST (λl . (RIGHT (RIGHT l))))
+(define RANGE (Z (λf . (λm . (λn . (((IF ((LESS-OR-EQUAL? m) n))
+                                     (λx . (((UNSHIFT ((f (INC m)) n)) m) x)))
+                                    EMPTY))))))
+
+;; Inspection
+(defn to-integer [f]
+  ((f inc) 0))
+
+(defn to-boolean [f]
+  ((f 'true) 'false))
+
+(defn to-array [f]
+  (into []
+        (if (to-boolean (EMPTY? f))
+          ()
+          (cons (FIRST f) (to-array (REST f))))))
 
 ;; ~ Examples ~
 (pp 'ZERO)
@@ -129,12 +139,8 @@
 (to-boolean (EMPTY? L1))
 (to-boolean (EMPTY? EMPTY))
 
-(defn to-array [f]
-  (into []
-        (if (to-boolean (EMPTY? f))
-          ()
-          (cons (FIRST f) (to-array (REST f))))))
-
 (map to-integer (to-array L1))
+
+(map to-integer (to-array ((RANGE ONE) FIVE)))
 
 
