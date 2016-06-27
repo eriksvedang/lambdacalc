@@ -20,7 +20,10 @@
 
 (defn pp [x]
   (cond
-    (symbol? x) (:original-form (meta (resolve x)))
+    (symbol? x) (let [lookup (:original-form (meta (resolve x)))]
+                  (if (nil? lookup)
+                    x
+                    (pp lookup)))
     (list? x) (apply list (map pp x))
     :else x))
 
@@ -39,26 +42,31 @@
 (define FIFTEEN (λf . (λx . (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x))))))))))))))))))
 ;; (define HUNDRED (λf . (λx . (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f(f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
 
-(define TRUE (λx . (λy . x)))
+(define TRUE  (λx . (λy . x)))
 (define FALSE (λx . (λy . y)))
-(define IF (λx . x))
+(define IF    (λx . x))
 
 (define ZERO? (λn . ((n (λx . FALSE)) TRUE)))
 
-(define PAIR (λx . (λy . (λf . (((IF f) x) y)))))
-(define LEFT (λp . (p TRUE)))
+(define PAIR  (λx . (λy . (λf . (((IF f) x) y)))))
+(define LEFT  (λp . (p TRUE)))
 (define RIGHT (λp . (p FALSE)))
 
-(define INC (λn . (λp . (λx . (p ((n p) x))))))
+(define INC   (λn . (λp . (λx . (p ((n p) x))))))
 (define SLIDE (λp . ((PAIR (RIGHT p)) (INC (RIGHT p))))) ;; see p. 175
-(define DEC (λn . (LEFT ((n SLIDE) ((PAIR ZERO) ZERO)))))
+(define DEC   (λn . (LEFT ((n SLIDE) ((PAIR ZERO) ZERO)))))
+
+(define ADD      (λm . (λn . ((n INC) m))))
+(define SUBTRACT (λm . (λn . ((n DEC) m))))
+(define MULTIPLY (λm . (λn . ((n (ADD m)) ZERO))))
+(define POWER    (λm . (λn . ((n (MULTIPLY m)) ONE))))
 
 ;; ~ Examples ~
-(pp ZERO)
-(pp ONE)
-(pp TWO)
-(pp THREE)
-(pp IF)
+(pp 'ZERO)
+(pp 'ONE)
+(pp 'TWO)
+(pp 'THREE)
+(pp 'IF)
 
 (to-integer ZERO)
 (to-integer ONE)
@@ -84,3 +92,9 @@
 (to-integer (INC (INC FIVE)))
 (to-integer (DEC (DEC FIVE)))
 
+(to-integer ((ADD FIVE) THREE))
+(to-integer ((SUBTRACT FIVE) THREE))
+(to-integer ((MULTIPLY FIVE) THREE))
+(to-integer ((POWER FIVE) THREE))
+
+(pp '((POWER FIVE) THREE))
