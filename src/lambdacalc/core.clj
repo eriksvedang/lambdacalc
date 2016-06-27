@@ -50,6 +50,8 @@
 (define RIGHT (λp . (p FALSE)))
 
 (define INC (λn . (λp . (λx . (p ((n p) x))))))
+(define SLIDE (λp . ((PAIR (RIGHT p)) (INC (RIGHT p))))) ;; see p. 175
+(define DEC (λn . (LEFT ((n SLIDE) ((PAIR ZERO) ZERO)))))
 
 ;; ~ Examples ~
 (pp ZERO)
@@ -80,4 +82,5 @@
 (to-integer (RIGHT ((PAIR TWO) THREE)))
 
 (to-integer (INC (INC FIVE)))
+(to-integer (DEC (DEC FIVE)))
 
