@@ -45,6 +45,12 @@
 
 (define ZERO? (λn . ((n (λx . FALSE)) TRUE)))
 
+(define PAIR (λx . (λy . (λf . (((IF f) x) y)))))
+(define LEFT (λp . (p TRUE)))
+(define RIGHT (λp . (p FALSE)))
+
+(define INC (λn . (λp . (λx . (p ((n p) x))))))
+
 ;; ~ Examples ~
 (pp ZERO)
 (pp ONE)
@@ -70,4 +76,8 @@
 
 (pp '(((IF TRUE) ONE) TWO))
 
+(to-integer (LEFT ((PAIR TWO) THREE)))
+(to-integer (RIGHT ((PAIR TWO) THREE)))
+
+(to-integer (INC (INC FIVE)))
 
