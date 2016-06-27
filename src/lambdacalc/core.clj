@@ -71,6 +71,12 @@
 
 (define HUNDRED ((MULTIPLY FIVE) ((MULTIPLY FIVE) ((MULTIPLY TWO) TWO))))
 
+(define EMPTY ((PAIR TRUE) TRUE))
+(define UNSHIFT (λl . (λx . ((PAIR FALSE) ((PAIR x) l)))))
+(define EMPTY? LEFT)
+(define FIRST (λl . (LEFT (RIGHT l))))
+(define REST (λl . (RIGHT (RIGHT l))))
+
 ;; ~ Examples ~
 (pp 'ZERO)
 (pp 'ONE)
@@ -115,4 +121,11 @@
 (to-integer ((MOD FIVE) THREE))
 (to-integer ((MOD ((MULTIPLY FIVE) FIVE)) ((MULTIPLY TWO) TWO)))
 
+(def L1 ((UNSHIFT ((UNSHIFT ((UNSHIFT EMPTY) THREE)) TWO)) ONE))
+
+(to-integer (FIRST L1))
+(to-integer (FIRST (REST L1)))
+(to-integer (FIRST (REST (REST L1))))
+(to-boolean (EMPTY? L1))
+(to-boolean (EMPTY? EMPTY))
 
