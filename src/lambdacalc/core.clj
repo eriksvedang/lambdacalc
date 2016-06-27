@@ -129,3 +129,12 @@
 (to-boolean (EMPTY? L1))
 (to-boolean (EMPTY? EMPTY))
 
+(defn to-array [f]
+  (into []
+        (if (to-boolean (EMPTY? f))
+          ()
+          (cons (FIRST f) (to-array (REST f))))))
+
+(map to-integer (to-array L1))
+
+
