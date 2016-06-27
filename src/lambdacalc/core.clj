@@ -61,9 +61,13 @@
 (define POWER    (λm . (λn . ((n (MULTIPLY m)) ONE))))
 
 (define LESS-OR-EQUAL? (λm . (λn . (ZERO? ((SUBTRACT m) n)))))
-(define MOD (λm . (λn . (((IF ((LESS-OR-EQUAL? n) m))
-                          (λx . (((MOD ((SUBTRACT m) n)) n) x)))
-                         m))))
+
+(define Z (λf . ((λx . (f (λy . ((x x) y))))
+                 (λx . (f (λy . ((x x) y)))))))
+
+(define MOD (Z (λf . (λm . (λn . (((IF ((LESS-OR-EQUAL? n) m))
+                                   (λx . (((f ((SUBTRACT m) n)) n) x)))
+                                  m))))))
 
 (define HUNDRED ((MULTIPLY FIVE) ((MULTIPLY FIVE) ((MULTIPLY TWO) TWO))))
 
@@ -110,4 +114,5 @@
 
 (to-integer ((MOD FIVE) THREE))
 (to-integer ((MOD ((MULTIPLY FIVE) FIVE)) ((MULTIPLY TWO) TWO)))
+
 
