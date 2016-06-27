@@ -74,7 +74,7 @@
                                      (λx . (((UNSHIFT ((f (INC m)) n)) m) x)))
                                     EMPTY))))))
 
-;; Inspection
+;; ~ Inspection ~
 (defn to-integer [f]
   ((f inc) 0))
 
