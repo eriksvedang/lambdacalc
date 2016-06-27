@@ -62,6 +62,9 @@
 (define POWER    (λm . (λn . ((n (MULTIPLY m)) ONE))))
 
 (define LESS-OR-EQUAL? (λm . (λn . (ZERO? ((SUBTRACT m) n)))))
+(define MOD (λm . (λn . (((IF ((LESS-OR-EQUAL? n) m))
+                          (λx . (((MOD ((SUBTRACT m) n)) n) x)))
+                         m))))
 
 ;; ~ Examples ~
 (pp 'ZERO)
@@ -102,4 +105,7 @@
 (to-boolean ((LESS-OR-EQUAL? THREE) FIVE))
 (to-boolean ((LESS-OR-EQUAL? THREE) THREE))
 (to-boolean ((LESS-OR-EQUAL? FIVE) THREE))
+
+(to-integer ((MOD FIVE) THREE))
+(to-integer ((MOD ((MULTIPLY FIVE) FIVE)) ((MULTIPLY TWO) TWO)))
 
