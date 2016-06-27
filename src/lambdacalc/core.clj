@@ -40,7 +40,6 @@
 (define THREE   (λf . (λx . (f (f (f x))))))
 (define FIVE    (λf . (λx . (f (f (f (f (f x))))))))
 (define FIFTEEN (λf . (λx . (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x))))))))))))))))))
-;; (define HUNDRED (λf . (λx . (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f(f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
 
 (define TRUE  (λx . (λy . x)))
 (define FALSE (λx . (λy . y)))
@@ -66,11 +65,14 @@
                           (λx . (((MOD ((SUBTRACT m) n)) n) x)))
                          m))))
 
+(define HUNDRED ((MULTIPLY FIVE) ((MULTIPLY FIVE) ((MULTIPLY TWO) TWO))))
+
 ;; ~ Examples ~
 (pp 'ZERO)
 (pp 'ONE)
 (pp 'TWO)
 (pp 'THREE)
+(pp 'HUNDRED)
 (pp 'IF)
 
 (to-integer ZERO)
@@ -79,7 +81,7 @@
 (to-integer THREE)
 (to-integer FIVE)
 (to-integer FIFTEEN)
-;;(to-integer HUNDRED)
+(to-integer HUNDRED)
 
 (to-boolean TRUE)
 (to-boolean FALSE)
