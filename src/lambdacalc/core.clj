@@ -5,8 +5,10 @@
   (throw (Exception. (apply str s))))
 
 (defn expand [x]
-  (if (and (list? x) (= (first x) 'λ))
-    (list 'fn (second x) (expand (nth x 2)))
+  (if (list? x)
+    (if (= (first x) 'λ)
+      (list 'fn (second x) (expand (nth x 2)))
+      (apply list (map expand x)))
     x))
 
 (defmacro define [name lambda]
@@ -35,7 +37,9 @@
 
 (define TRUE (λ [x] (λ [y] x)))
 (define FALSE (λ [x] (λ [y] y)))
-(define IF (λ [b] (λ [x] (λ [y] ((b x) y)))))
+(define IF (λ [x] x))
+
+(define ZERO? (λ [n] ((n (λ [x] FALSE)) TRUE)))
 
 ;; ~ Examples ~
 (pp ZERO)
@@ -50,11 +54,16 @@
 (to-integer THREE)
 (to-integer FIVE)
 (to-integer FIFTEEN)
-(to-integer HUNDRED)
+;;(to-integer HUNDRED)
 
 (to-boolean TRUE)
 (to-boolean FALSE)
 (to-integer (((IF TRUE) ONE) TWO))
 (to-integer (((IF FALSE) ONE) TWO))
+
+(to-boolean (ZERO? ZERO))
+(to-boolean (ZERO? ONE))
+
+;;(pp (((IF TRUE) ONE) TWO))
 
 
