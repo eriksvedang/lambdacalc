@@ -19,21 +19,42 @@
   `(:original-form (meta (var ~x))))
 
 (defn to-integer [f]
-  ((f (fn [n] (inc n))) 0))
+  ((f inc) 0))
+
+(defn to-boolean [f]
+  ((f 'true) 'false))
 
 ;; ~ Definitions ~
-(define zero  (λ [x] x))
-(define one   (λ [p] (λ [x] (p x))))
-(define two   (λ [p] (λ [x] (p (p x)))))
-(define three (λ [p] (λ [x] (p (p (p x))))))
+(define ZERO    (λ [f] (λ [x] x)))
+(define ONE     (λ [f] (λ [x] (f x))))
+(define TWO     (λ [f] (λ [x] (f (f x)))))
+(define THREE   (λ [f] (λ [x] (f (f (f x))))))
+(define FIVE    (λ [f] (λ [x] (f (f (f (f (f x))))))))
+(define FIFTEEN (λ [f] (λ [x] (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x))))))))))))))))))
+;; (define HUNDRED (λ [f] (λ [x] (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f(f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
+
+(define TRUE (λ [x] (λ [y] x)))
+(define FALSE (λ [x] (λ [y] y)))
+(define IF (λ [b] (λ [x] (λ [y] ((b x) y)))))
 
 ;; ~ Examples ~
-(pp zero)
-(pp one)
-(pp two)
-(pp three)
+(pp ZERO)
+(pp ONE)
+(pp TWO)
+(pp THREE)
+(pp IF)
 
-(to-integer zero)
-(to-integer one)
-(to-integer two)
-(to-integer three)
+(to-integer ZERO)
+(to-integer ONE)
+(to-integer TWO)
+(to-integer THREE)
+(to-integer FIVE)
+(to-integer FIFTEEN)
+(to-integer HUNDRED)
+
+(to-boolean TRUE)
+(to-boolean FALSE)
+(to-integer (((IF TRUE) ONE) TWO))
+(to-integer (((IF FALSE) ONE) TWO))
+
+
