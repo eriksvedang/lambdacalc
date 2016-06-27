@@ -37,13 +37,13 @@
 (define THREE   (λf . (λx . (f (f (f x))))))
 (define FIVE    (λf . (λx . (f (f (f (f (f x))))))))
 (define FIFTEEN (λf . (λx . (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x))))))))))))))))))
-;; (define HUNDRED (λ [f] (λ [x] (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f(f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
+;; (define HUNDRED (λf . (λx . (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f(f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
 
 (define TRUE (λx . (λy . x)))
 (define FALSE (λx . (λy . y)))
 (define IF (λx . x))
 
-(define ZERO? (λn .((n (λx . FALSE)) TRUE)))
+(define ZERO? (λn . ((n (λx . FALSE)) TRUE)))
 
 ;; ~ Examples ~
 (pp ZERO)
