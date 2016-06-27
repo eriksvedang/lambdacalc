@@ -61,6 +61,8 @@
 (define MULTIPLY (λm . (λn . ((n (ADD m)) ZERO))))
 (define POWER    (λm . (λn . ((n (MULTIPLY m)) ONE))))
 
+(define LESS_OR_EQUAL? (λm . (λn . (ZERO? ((SUBTRACT m) n)))))
+
 ;; ~ Examples ~
 (pp 'ZERO)
 (pp 'ONE)
@@ -97,4 +99,7 @@
 (to-integer ((MULTIPLY FIVE) THREE))
 (to-integer ((POWER FIVE) THREE))
 
-(pp '((POWER FIVE) THREE))
+(to-boolean ((LESS_OR_EQUAL? THREE) FIVE))
+(to-boolean ((LESS_OR_EQUAL? THREE) THREE))
+(to-boolean ((LESS_OR_EQUAL? FIVE) THREE))
+
