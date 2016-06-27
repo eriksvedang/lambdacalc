@@ -17,8 +17,11 @@
      (reset-meta! (var ~name) {:original-form (quote ~lambda)})
      (quote ~lambda)))
 
-(defmacro pp [x]
-  `(:original-form (meta (var ~x))))
+(defn pp [x]
+  (cond
+    (symbol? x) (:original-form (meta (resolve x)))
+    (list? x) (apply list (map pp x))
+    :else x))
 
 (defn to-integer [f]
   ((f inc) 0))
@@ -64,6 +67,6 @@
 (to-boolean (ZERO? ZERO))
 (to-boolean (ZERO? ONE))
 
-;;(pp (((IF TRUE) ONE) TWO))
+(pp '(((IF TRUE) ONE) TWO))
 
 
