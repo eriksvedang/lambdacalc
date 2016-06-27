@@ -5,10 +5,11 @@
   (throw (Exception. (apply str s))))
 
 (defn expand [x]
-  (if (list? x)
-    (if (= (first x) 'λ)
-      (list 'fn (second x) (expand (nth x 2)))
-      (apply list (map expand x)))
+  (if (and (list? x) (not (empty? x)))
+    (let [head (first x)]
+      (if (and (symbol? head) (= (first (str head)) \λ))
+        (list 'fn [(symbol (clojure.string/join (rest (str head))))] (expand (nth x 2)))
+        (apply list (map expand x))))
     x))
 
 (defmacro define [name lambda]
@@ -30,19 +31,19 @@
   ((f 'true) 'false))
 
 ;; ~ Definitions ~
-(define ZERO    (λ [f] (λ [x] x)))
-(define ONE     (λ [f] (λ [x] (f x))))
-(define TWO     (λ [f] (λ [x] (f (f x)))))
-(define THREE   (λ [f] (λ [x] (f (f (f x))))))
-(define FIVE    (λ [f] (λ [x] (f (f (f (f (f x))))))))
-(define FIFTEEN (λ [f] (λ [x] (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x))))))))))))))))))
+(define ZERO    (λf . (λx . x)))
+(define ONE     (λf . (λx . (f x))))
+(define TWO     (λf . (λx . (f (f x)))))
+(define THREE   (λf . (λx . (f (f (f x))))))
+(define FIVE    (λf . (λx . (f (f (f (f (f x))))))))
+(define FIFTEEN (λf . (λx . (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x))))))))))))))))))
 ;; (define HUNDRED (λ [f] (λ [x] (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f(f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
 
-(define TRUE (λ [x] (λ [y] x)))
-(define FALSE (λ [x] (λ [y] y)))
-(define IF (λ [x] x))
+(define TRUE (λx . (λy . x)))
+(define FALSE (λx . (λy . y)))
+(define IF (λx . x))
 
-(define ZERO? (λ [n] ((n (λ [x] FALSE)) TRUE)))
+(define ZERO? (λn .((n (λx . FALSE)) TRUE)))
 
 ;; ~ Examples ~
 (pp ZERO)
