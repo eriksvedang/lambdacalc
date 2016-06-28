@@ -104,6 +104,17 @@
                                     (λx . ((f ((DIV n) TEN)) x)))
                                    ) ((MOD n) TEN))))))
 
+(define SOLUTION ((MAP
+                   ((RANGE ONE) HUNDRED))
+                  (λn .
+                      (((IF (ZERO? ((MOD n) FIFTEEN)))
+                        FIZZBUZZ)
+                       (((IF (ZERO? ((MOD n) THREE)))
+                         FIZZ)
+                        (((IF (ZERO? ((MOD n) FIVE)))
+                          BUZZ)
+                         (TO-DIGITS n)))))))
+
 ;; ~ inspection ~
 (defn to-integer [f]
   ((f inc) 0))
@@ -196,3 +207,4 @@
 (map to-integer (to-array (TO-DIGITS FIFTEEN)))
 (map to-integer (to-array (TO-DIGITS ((POWER FIVE) THREE))))
 
+(map to-string (to-array SOLUTION))
