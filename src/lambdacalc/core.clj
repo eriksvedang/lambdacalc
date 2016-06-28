@@ -98,6 +98,12 @@
 
 (define PUSH (λl . (λx . (((FOLD l) ((UNSHIFT EMPTY) x)) UNSHIFT))))
 
+(define TO-DIGITS (Z (λf . (λn . ((PUSH
+                                   (((IF ((LESS-OR-EQUAL? n) (DEC TEN)))
+                                     EMPTY)
+                                    (λx . ((f ((DIV n) TEN)) x)))
+                                   ) ((MOD n) TEN))))))
+
 ;; ~ inspection ~
 (defn to-integer [f]
   ((f inc) 0))
@@ -185,3 +191,8 @@
 (to-integer ((DIV TEN) TWO))
 
 (map to-integer (to-array ((PUSH L1) TEN)))
+
+(map to-integer (to-array (TO-DIGITS FIVE)))
+(map to-integer (to-array (TO-DIGITS FIFTEEN)))
+(map to-integer (to-array (TO-DIGITS ((POWER FIVE) THREE))))
+
