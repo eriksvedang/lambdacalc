@@ -6,9 +6,6 @@
 ;; printing of their original body (see the 'pp' function).
 
 ;; ~ Implementation ~
-(defn error [& s]
-  (throw (Exception. (apply str s))))
-
 (defn expand [x]
   (if (and (list? x) (not (empty? x)))
     (let [head (first x)]
