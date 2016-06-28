@@ -96,6 +96,8 @@
                                    (λx . ((INC ((f ((SUBTRACT m) n)) n)) x)))
                                   ZERO))))))
 
+(define PUSH (λl . (λx . (((FOLD l) ((UNSHIFT EMPTY) x)) UNSHIFT))))
+
 ;; ~ inspection ~
 (defn to-integer [f]
   ((f inc) 0))
@@ -181,3 +183,5 @@
 (to-string FIZZBUZZ)
 
 (to-integer ((DIV TEN) TWO))
+
+(map to-integer (to-array ((PUSH L1) TEN)))
