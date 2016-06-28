@@ -76,8 +76,10 @@
 
 (define FOLD (Z (λf . (λl . (λx . (λg . (((IF (IS-EMPTY? l))
                                           x)
-                                         (λy . (((g (((f (REST l)) x) g)) (FIRST l)) y)
-                                            ))))))))
+                                         (λy . (((g (((f (REST l)) x) g)) (FIRST l)) y)))))))))
+
+(define MAP (λk . (λf . (((FOLD k) EMPTY)
+                         (λl . (λx . ((UNSHIFT l) (f x))))))))
 
 ;; ~ Inspection ~
 (defn to-integer [f]
@@ -148,8 +150,7 @@
 
 (map to-integer (to-array ((RANGE ONE) FIVE)))
 
-(pp '((RANGE ONE) FIVE))
-
 (to-integer (((FOLD L1) ZERO) ADD))
 (to-integer (((FOLD L1) TWO) MULTIPLY))
 
+(map to-integer (to-array ((MAP L1) INC)))
