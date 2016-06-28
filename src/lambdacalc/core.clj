@@ -76,7 +76,7 @@
                                      (λx . (((UNSHIFT ((f (INC m)) n)) m) x)))
                                     EMPTY))))))
 
-(define FOLD (Z (λf . (λl . (λx . (λg . (((IF (IS-EMPTY? l))
+(define FOLD (Z (λf . (λl . (λx . (λg . (((IF (EMPTY? l))
                                           x)
                                          (λy . (((g (((f (REST l)) x) g)) (FIRST l)) y)))))))))
 
