@@ -117,7 +117,7 @@
                           BUZZ)
                          (TO-DIGITS n)))))))
 
-;; ~ inspection ~
+;; ~ Inspection ~
 (defn to-integer [f]
   ((f inc) 0))
 
