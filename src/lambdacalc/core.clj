@@ -88,9 +88,15 @@
 (define U   (INC I))
 (define ZED (INC U))
 
-(define FIZZ ((UNSHIFT ((UNSHIFT ((UNSHIFT ((UNSHIFT EMPTY) ZED)) ZED)) I)) F))
+(define FIZZ     ((UNSHIFT ((UNSHIFT ((UNSHIFT ((UNSHIFT EMPTY) ZED)) ZED)) I)) F))
+(define BUZZ     ((UNSHIFT ((UNSHIFT ((UNSHIFT ((UNSHIFT EMPTY) ZED)) ZED)) U)) B))
+(define FIZZBUZZ ((UNSHIFT ((UNSHIFT ((UNSHIFT ((UNSHIFT BUZZ) ZED)) ZED)) I)) F))
 
-;; ~ Inspection ~
+(define DIV (Z (λf . (λm . (λn . (((IF ((LESS-OR-EQUAL? n) m))
+                                   (λx . ((INC ((f ((SUBTRACT m) n)) n)) x)))
+                                  ZERO))))))
+
+;; ~ inspection ~
 (defn to-integer [f]
   ((f inc) 0))
 
@@ -171,3 +177,7 @@
 (map to-integer (to-array ((MAP L1) INC)))
 
 (to-string FIZZ)
+(to-string BUZZ)
+(to-string FIZZBUZZ)
+
+(to-integer ((DIV TEN) TWO))
