@@ -81,6 +81,15 @@
 (define MAP (λk . (λf . (((FOLD k) EMPTY)
                          (λl . (λx . ((UNSHIFT l) (f x))))))))
 
+(define TEN ((MULTIPLY FIVE) TWO))
+(define B   TEN)
+(define F   (INC B))
+(define I   (INC F))
+(define U   (INC I))
+(define ZED (INC U))
+
+(define FIZZ ((UNSHIFT ((UNSHIFT ((UNSHIFT ((UNSHIFT EMPTY) ZED)) ZED)) I)) F))
+
 ;; ~ Inspection ~
 (defn to-integer [f]
   ((f inc) 0))
@@ -93,6 +102,12 @@
         (if (to-boolean (EMPTY? f))
           ()
           (cons (FIRST f) (to-array (REST f))))))
+
+(defn to-char [f]
+  (nth "0123456789BFiuz" (to-integer f)))
+
+(defn to-string [f]
+  (clojure.string/join (map to-char (to-array f))))
 
 ;; ~ Examples ~
 (pp 'ZERO)
@@ -138,7 +153,7 @@
 (to-integer ((MOD FIVE) THREE))
 (to-integer ((MOD ((MULTIPLY FIVE) FIVE)) ((MULTIPLY TWO) TWO)))
 
-(def L1 ((UNSHIFT ((UNSHIFT ((UNSHIFT EMPTY) THREE)) TWO)) ONE))
+(define L1 ((UNSHIFT ((UNSHIFT ((UNSHIFT EMPTY) THREE)) TWO)) ONE))
 
 (to-integer (FIRST L1))
 (to-integer (FIRST (REST L1)))
@@ -154,3 +169,5 @@
 (to-integer (((FOLD L1) TWO) MULTIPLY))
 
 (map to-integer (to-array ((MAP L1) INC)))
+
+(to-string FIZZ)
