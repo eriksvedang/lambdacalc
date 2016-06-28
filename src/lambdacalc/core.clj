@@ -1,5 +1,10 @@
 (ns lambdacalc.core)
 
+;; This is an adaptation of Tom Stuart's implementation of FizzBuzz in lambda calculus,
+;; as written down in the excellent book "Understanding Computation". His implementation is
+;; made with Ruby, using procs. Here I use native Clojure lambdas but with a trick to allow
+;; printing of their original body (see the 'pp' function).
+
 ;; ~ Implementation ~
 (defn error [& s]
   (throw (Exception. (apply str s))))
@@ -208,3 +213,5 @@
 (map to-integer (to-array (TO-DIGITS ((POWER FIVE) THREE))))
 
 (map to-string (to-array SOLUTION))
+
+(println (pp 'SOLUTION))
